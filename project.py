@@ -8,33 +8,38 @@ class Project(object):
         self.project_is_clear = False
 
         # Tasks
-        self.tasks = []
-        self.weights = []
-        self.comments = []
-        self.is_clear_list = []
+        self.task_id = 0
+        self.task = {
+            "name": "",
+            "weight": 1,
+            "comment": "",
+            "tags": [],
+            "is_clear": False,
+        }
+        self.tasks = {}
 
-    def add_task(self, task="", weight=1, comment="", clear=False):
+    def add_task(self, name="", weight=1, comment="", is_clear=False):
         # If task field is null
-        if task == "":
-            task = "temp_{}".format(len(self.tasks))
+        if name == "":
+            name = "temp_{}".format(len(self.tasks))
 
         # Add
-        self.tasks.append(task)
-        self.weights.append(weight)
-        self.comments.append(comment)
-        self.is_clear_list.append(clear)
+        task = self.task.copy()
+        task["name"] = name
+        task["weight"] = weight
+        task["comment"] = comment
+        task["is_clear"] = is_clear
+        self.tasks[self.task_id] = task
+        self.task_id += 1
 
-    def delete_task(self, index: int):
-        self.tasks.pop(index)
-        self.weights.pop(index)
-        self.comments.pop(index)
-        self.is_clear_list.pop(index)
+    def delete_task(self, task_id: int):
+        self.tasks.pop(task_id)
 
-    def update_task(self, index, task, weight, comment, clear):
-        self.tasks[index] = task
-        self.weights[index] = weight
-        self.comments[index] = comment
-        self.is_clear_list[index] = clear
+    def update_task(self, task_id, name, weight, comment, is_clear):
+        self.tasks[task_id]["name"] = name
+        self.tasks[task_id]["weight"] = weight
+        self.tasks[task_id]["comment"] = comment
+        self.tasks[task_id]["is_clear"] = False
 
 
 
